@@ -3,17 +3,17 @@
 <script type="text/javascript" src="sentimood.js"></script>
  </head>
 <body>
-This uses terms from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1">Schmader T, Whitehead J, Wysocki VH. A Linguistic Comparison of Letters of Recommendation for Male and Female Chemistry and Biochemistry Job Applicants. Sex roles. 2007;57(7-8):509-514. doi:10.1007/s11199-007-9291-4.</a>. Paste in two letters to compare them (click on the page the box to start parsing).
+This uses terms from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1">Schmader T, Whitehead J, Wysocki VH. A Linguistic Comparison of Letters of Recommendation for Male and Female Chemistry and Biochemistry Job Applicants. Sex roles. 2007;57(7-8):509-514. doi:10.1007/s11199-007-9291-4.</a>. Paste in two letters to compare them (click on the page somewhere outside the box to start parsing). The letters are parsed for length, sentiment (words are scored for how positive or negative they are), words relating to teaching, words relating to research, words relating to being a standout ("best"), words relating to ability, words relating to "grit", and titles used. In most areas, higher scores are better (the only exceptions would be if it is too long, or if your field favors using first names, rather than titles). I've set this up so that everything is done with javascript on the client side (that is, your browser) rather than being run in this server, and nothing is transfered (so I can't see your letters). You can see the code at https://github.com/bomeara/sentimood for more info. That said, I could have messed something up so that the letters are somehow visible.
 
-  <div style="float:left;">
+  <div style="align:right;float:left;">
   <p id="leftresponse"></p>
-  <textarea name="letterleft" id="letterleft" rows="40" cols="20" onchange="ParseLetter(this.value, 'leftresponse')">Paste first letter here</textarea>
+  <textarea name="letterleft" id="letterleft" rows="40" cols="40" onchange="ParseLetter(this.value, 'leftresponse')">Paste first letter here</textarea>
   </div>
 
   <div style="float:right;">
     <p id="rightresponse"></p>
 
-    <textarea name="letterright" id="letterright" rows="40" cols="20" onchange="ParseLetter(this.value, 'rightresponse')">Paste second letter here</textarea>
+    <textarea name="letterright" id="letterright" rows="40" cols="40" onchange="ParseLetter(this.value, 'rightresponse')">Paste second letter here</textarea>
   </div>
 
 

@@ -10,11 +10,12 @@ var Sentimood;
 Sentimood = (function() {
   var afinn;
   var teaching;
+  var research;
   function Sentimood() {}
 
 
 /*
- Teaching words from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1
+ Teaching and research words from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1
  Schmader T, Whitehead J, Wysocki VH. A Linguistic Comparison of Letters of
  Recommendation for Male and Female Chemistry and Biochemistry Job Applicants.
  Sex roles. 2007;57(7-8):509-514. doi:10.1007/s11199-007-9291-4.
@@ -60,6 +61,53 @@ Sentimood = (function() {
     "rapport": 1
     };
 
+  research = {
+    "research": 1,
+    "researched": 1,
+    "data": 1,
+    "study": 1,
+    "studies": 1,
+    "experiment*": 1,
+    "scholarship": 1,
+    "test": 1,
+    "tested": 1,
+    "result": 1,
+    "results": 1,
+    "resulted": 1,
+    "finding": 1,
+    "findings": 1,
+    "publication": 1,
+    "publications": 1,
+    "publish": 1,
+    "published": 1,
+    "publishes": 1,
+    "publishing": 1,
+    "vita": 1,
+    "vitae": 1,
+    "method": 1,
+    "methods": 1,
+    "science": 1,
+    "scientist": 1,
+    "grant": 1,
+    "grants": 1,
+    "fund": 1,
+    "funds": 1,
+    "funding": 1,
+    "funded": 1,
+    "manuscript": 1,
+    "manuscripts": 1,
+    "project": 1,
+    "projects": 1,
+    "journal": 1,
+    "journals": 1,
+    "theory": 1,
+    "theories": 1,
+    "discover": 1,
+    "discoveries": 1,
+    "discovered": 1,
+    "contribution": 1,
+    "contributions": 1
+  };
 
   afinn = {
     "abandon": -2,
@@ -2591,6 +2639,31 @@ Sentimood = (function() {
       if (teaching.hasOwnProperty(item)) {
         if (teaching[item] > 0) {
           addPush(item, teaching[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
+  Sentimood.prototype.research= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (research.hasOwnProperty(item)) {
+        if (research[item] > 0) {
+          addPush(item, research[item]);
         }
       }
     }

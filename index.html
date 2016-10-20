@@ -19,7 +19,10 @@
     //document.write(JSON.stringify(sentiment.positivity("This is so \ncat cool awesome")));
   //   document.write("cat\n");
      //document.write(sentiment.positivity(letterValue)['score']);
-     document.getElementById("result").innerHTML = "Word count: " + sentiment.wc(letterValue)['score'] + "<br />Sentiment: " + sentiment.analyze(letterValue)['score'] + "<br />Teaching: " + sentiment.teaching(letterValue)['score'];
+     document.getElementById("result").innerHTML = "Word count: " + sentiment.wc(letterValue)['score']
+     + "<br />Sentiment: " + sentiment.analyze(letterValue)['score']
+    + "<br />Teaching: " + sentiment.teaching(letterValue)['score']
+    + "<br />Research: " + sentiment.research(letterValue)['score'];
 };
  </script>
 

@@ -11,11 +11,17 @@ Sentimood = (function() {
   var afinn;
   var teaching;
   var research;
+  var titles;
+  var standout;
+  var ability;
+  var grindstone;
+  var titles;
+
   function Sentimood() {}
 
 
 /*
- Teaching and research words from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1
+ Teaching, research, standout, ability, grindstone words from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1
  Schmader T, Whitehead J, Wysocki VH. A Linguistic Comparison of Letters of
  Recommendation for Male and Female Chemistry and Biochemistry Job Applicants.
  Sex roles. 2007;57(7-8):509-514. doi:10.1007/s11199-007-9291-4.
@@ -108,6 +114,117 @@ Sentimood = (function() {
     "contribution": 1,
     "contributions": 1
   };
+
+  standout = {
+"excellent": 1,
+"excellence": 1,
+"superb": 1,
+"outstanding": 1,
+"unique": 1,
+"exceptional": 1,
+"unparalleled": 1,
+"best": 1,
+"most": 1,
+"wonderful": 1,
+"terrific": 1,
+"fabulous": 1,
+"magnificent": 1,
+"remarkable": 1,
+"extraordinary": 1,
+"amazing": 1,
+"supreme": 1,
+"unmatched": 1
+};
+
+ability = {
+"talent": 1,
+"talented": 1,
+"intelligent": 1,
+"intelligence": 1,
+"smart": 1,
+"smarter": 1,
+"smartest": 1,
+"skilled": 1,
+"skill": 1,
+"skills": 1,
+"ability": 1,
+"genius": 1,
+"brilliant": 1,
+"bright": 1,
+"brighter": 1,
+"brightest": 1,
+"brain": 1,
+"brains": 1,
+"aptitude": 1,
+"gift": 1,
+"gifts": 1,
+"capacity": 1,
+"propensity": 1,
+"innate": 1,
+"flair": 1,
+"knack": 1,
+"clever": 1,
+"cleverest": 1,
+"expert": 1,
+"expertise": 1,
+"proficient": 1,
+"capable": 1,
+"adept": 1,
+"able": 1,
+"competent": 1,
+"natural": 1,
+"inherent": 1,
+"instinct": 1,
+"adroit": 1,
+"adroitly": 1,
+"creative": 1,
+"creatively": 1,
+"insight": 1,
+"insights": 1,
+"analytical": 1
+};
+
+grindstone = {
+ "hardworking": 1,
+"conscientious": 1,
+"depend": 1,
+"dependable": 1,
+"meticulous": 1,
+"thorough": 1,
+"diligent": 1,
+"diligence": 1,
+"dedicate": 1,
+"careful": 1,
+"reliable": 1,
+"reliably": 1,
+"effort": 1,
+"efforts": 1,
+"assiduous": 1,
+"trust": 1,
+"trustworthy": 1,
+"responsible": 1,
+"responsibly": 1,
+"methodical": 1,
+"industrious": 1,
+"busy": 1,
+"work": 1,
+"worked": 1,
+"worker": 1,
+"persistent": 1,
+"persistently": 1,
+"organize": 1,
+"organized": 1,
+"organizer": 1,
+"disciplined": 1
+};
+
+titles = {
+  "Ms.": 1,
+  "Mr.": 1,
+  "Mrs.": 1,
+  "Miss": -1,
+  "Dr.": 1
+};
 
   afinn = {
     "abandon": -2,
@@ -2673,6 +2790,107 @@ Sentimood = (function() {
       words: words
     };
   };
+
+  Sentimood.prototype.standout= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (standout.hasOwnProperty(item)) {
+        if (standout[item] > 0) {
+          addPush(item, standout[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
+  Sentimood.prototype.ability= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (ability.hasOwnProperty(item)) {
+        if (ability[item] > 0) {
+          addPush(item, ability[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
+  Sentimood.prototype.grindstone= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (grindstone.hasOwnProperty(item)) {
+        if (grindstone[item] > 0) {
+          addPush(item, grindstone[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
+  Sentimood.prototype.titles= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (titles.hasOwnProperty(item)) {
+        if (titles[item] > 0) {
+          addPush(item, titles[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
 
   Sentimood.prototype.wc= function(phrase) {
     var addPush, hits, i, item, j, len, noPunctuation, tokens;

@@ -1,0 +1,27 @@
+<html>
+ <head>
+<script type="text/javascript" src="sentimood.js"></script>
+ </head>
+<body>
+
+ Paste letter text below, then click outside the box.
+ <p id="result"></p>
+ <textarea name="letter" id="letter" rows="40" cols="80" onchange="ParseLetter(this.value)">Paste your letter here</textarea>
+ <script type="text/javascript">
+ function ParseLetter(letterValue){
+ sentiment = new Sentimood();
+ //var analyze = sentiment.analyze(),
+//     positivity = sentiment.positivity(),
+  //   negativity = sentiment.negativity();
+//    var letterValue = document.getElementsByName('letter')[0].value
+
+    //document.write(JSON.stringify(sentiment.positivity(letterValue)));
+    //document.write(JSON.stringify(sentiment.positivity("This is so \ncat cool awesome")));
+  //   document.write("cat\n");
+     //document.write(sentiment.positivity(letterValue)['score']);
+     document.getElementById("result").innerHTML = "Word count: " + sentiment.wc(letterValue)['score'] + "<br />Sentiment: " + sentiment.analyze(letterValue)['score'] + "<br />Teaching: " + sentiment.teaching(letterValue)['score'];
+};
+ </script>
+
+ </body>
+</html>

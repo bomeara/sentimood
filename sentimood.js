@@ -9,8 +9,57 @@ var Sentimood;
 
 Sentimood = (function() {
   var afinn;
-
+  var teaching;
   function Sentimood() {}
+
+
+/*
+ Teaching words from https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2572075/#APP1
+ Schmader T, Whitehead J, Wysocki VH. A Linguistic Comparison of Letters of
+ Recommendation for Male and Female Chemistry and Biochemistry Job Applicants.
+ Sex roles. 2007;57(7-8):509-514. doi:10.1007/s11199-007-9291-4.
+
+ Note I took the stemmed words and expanded them.
+
+ Also added the word taught
+ */
+  teaching = {
+    "taught": 1,
+    "teach": 1,
+    "instruct": 1,
+    "instructor": 1,
+    "educate": 1,
+    "educator": 1,
+    "train": 1,
+    "trainer": 1,
+    "trained": 1,
+    "trains": 1,
+    "mentor": 1,
+    "supervisor": 1,
+    "supervise": 1,
+    "supervised": 1,
+    "adviser": 1,
+    "counselor": 1,
+    "syllabus": 1,
+    "syllabus": 1,
+    "course": 1,
+    "courses": 1,
+    "class": 1,
+    "service": 1,
+    "colleague": 1,
+    "citizen": 1,
+    "communicate": 1,
+    "communicated": 1,
+    "lecture": 1,
+    "lectured": 1,
+    "student": 1,
+    "students": 1,
+    "present": 1,
+    "presents": 1,
+    "presented": 1,
+    "rapport": 1
+    };
+
 
   afinn = {
     "abandon": -2,
@@ -2524,6 +2573,45 @@ Sentimood = (function() {
       score: hits,
       comparative: hits / words.length,
       words: words
+    };
+  };
+
+  Sentimood.prototype.teaching= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens, words;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    words = [];
+    for (i = j = 0, len = tokens.length; j < len; i = ++j) {
+      item = tokens[i];
+      if (teaching.hasOwnProperty(item)) {
+        if (teaching[item] > 0) {
+          addPush(item, teaching[item]);
+        }
+      }
+    }
+    return {
+      score: hits,
+      comparative: hits / words.length,
+      words: words
+    };
+  };
+
+  Sentimood.prototype.wc= function(phrase) {
+    var addPush, hits, i, item, j, len, noPunctuation, tokens;
+    addPush = function(t, score) {
+      hits += score;
+      return words.push(t);
+    };
+    noPunctuation = phrase.replace(/[^a-zA-Z ]+/g, ' ').replace('/ {2,}/', ' ');
+    tokens = noPunctuation.toLowerCase().split(" ");
+    hits = 0;
+    return {
+      score: tokens.length
     };
   };
 

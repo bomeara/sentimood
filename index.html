@@ -28,11 +28,11 @@
      //document.write(sentiment.positivity(letterValue)['score']);
      document.getElementById(position).innerHTML = "Word count: " + sentiment.wc(letterValue)['score']
      + "<br />Sentiment: " + sentiment.analyze(letterValue)['score']
-    + "<br />Teaching: " + sentiment.teaching(letterValue)['score']
-    + "<br />Research: " + sentiment.research(letterValue)['score']
-    + "<br />Standout: " + sentiment.standout(letterValue)['score']
-    + "<br />Ability: " + sentiment.ability(letterValue)['score']
-    + "<br />Grit: " + sentiment.grindstone(letterValue)['score']
+    + "<br />Teaching: " + sentiment.teaching(letterValue)['score'] + ' ' +  (sentiment.teaching(letterValue)['words']).toString()
+    + "<br />Research: " + sentiment.research(letterValue)['score'] + ' ' +  (sentiment.research(letterValue)['words']).toString()
+    + "<br />Standout: " + sentiment.standout(letterValue)['score'] + ' ' +  (sentiment.standout(letterValue)['words']).toString()
+    + "<br />Ability: " + sentiment.ability(letterValue)['score'] + ' ' +  (sentiment.ability(letterValue)['words']).toString()
+    + "<br />Grit: " + sentiment.grindstone(letterValue)['score'] + ' ' +  (sentiment.grindstone(letterValue)['words']).toString()
     + "<br />Titles: " + sentiment.titles(letterValue)['score'];
 };
  </script>
